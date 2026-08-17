@@ -1,0 +1,11 @@
+.env
+.DS_Store
+__pycache__/
+
+# Mídia pesada dos projetos (brutos e renders ficam locais ou no Drive)
+projects/**/*.mp4
+projects/**/*.mov
+projects/**/*.wav
+projects/**/*.m4a
+projects/**/*.MOV
+projects/**/*.png
