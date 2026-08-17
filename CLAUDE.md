@@ -7,6 +7,7 @@ Este repositório é o **Normalyze Conteúdo Studio**: edição e agendamento de
 ## Regras que valem em qualquer resposta pública
 
 - Nunca usar travessão em texto público (caption, lettering, legenda): reescrever a frase.
+- Personas diferentes por rede: **nunca agendar a mesma peça em LinkedIn e Instagram**. Conteúdo do Instagram pode replicar para TikTok e YouTube Shorts; LinkedIn tem peça própria. Ver "Personas por rede" no FRAMEWORK.md.
 - Posicionamento, tom de voz e claims do produto: **a definir com a equipe** (preencher no FRAMEWORK.md na primeira leva). Não inventar claims sobre o produto.
 
 ## Working dirs

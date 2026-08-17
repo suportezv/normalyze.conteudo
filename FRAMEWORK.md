@@ -12,11 +12,19 @@ Estúdio de edição e agendamento para as redes da **Normalyze.ai**. Espelho da
 - Identidade visual: paleta, tipografia, logo (integrar via design system do Claude Design se existir).
 - Voz de narração padrão do catálogo ElevenLabs (candidatas pt-BR listadas no CLAUDE.md; aprovar uma com teste de ouvido).
 
+### Personas por rede
+
+- **LinkedIn e Instagram têm personas diferentes.** Todo conteúdo nasce para uma das duas, com tom e formato próprios. **Nunca agendar a mesma peça em LinkedIn e Instagram.**
+- **Grupo Instagram**: o que for para Instagram pode também ir para TikTok e YouTube vertical (Shorts), mesma peça e mesma persona.
+- **Grupo LinkedIn**: peça própria (texto longo e/ou formato horizontal), sem replicar no grupo Instagram.
+- Detalhe de cada persona (quem é, tom, dores): **a definir com a equipe**.
+
 ### REGRAS INEGOCIÁVEIS
 
 1. **Nunca usar travessão em texto público.** Reescrever a frase.
 2. Nenhum claim de produto sem validação da equipe.
-3. Regras adicionais da marca: **a definir**.
+3. **Nunca agendar a mesma peça em LinkedIn e Instagram** (personas diferentes). Instagram replica só para TikTok e YouTube Shorts.
+4. Regras adicionais da marca: **a definir**.
 
 ## Pilares de conteúdo
 
