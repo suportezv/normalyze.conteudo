@@ -18,6 +18,7 @@ Este repositório é o **Normalyze Conteúdo Studio**: edição e agendamento de
 ## IDs e contas
 
 - Metricool: conta da agência suporte@mentoravirtual.com.br, marca "normalyze.ai", **blog_id 6735045**, timezone America/Sao_Paulo. Redes conectadas: Instagram **@normalyze.ai**, Facebook, LinkedIn, TikTok e YouTube. Melhor horário: medir (getBestTimeToPostByNetwork).
+- **Regra de agendamento (todas as marcas da agência)**: sempre incluir TODOS os canais conectados da marca no post, exceto YouTube horizontal. YouTube entra como **Short** (`youtubeData: {type: "short", title, madeForKids: false}`); Instagram como REEL; Facebook como REEL; TikTok e LinkedIn com networkData padrão. Nunca publicar vídeo vertical como YouTube horizontal comum.
 - ElevenLabs: chave em `.env` na raiz do video-use (transcrição Scribe + SFX/trilha + TTS; chave com voices_read). **A marca não tem voz própria**: escolher voz do catálogo da conta por peça (vozes profissionais pt-BR disponíveis: masculinas como Paulo `Qrdut83w0Cr152Yb4Xn3`, Juliano `wHnxjlY53t8X9Oi14Awz`, Hugo `NEiOFjKQRRitVnzQNwhS`; femininas como Raquel `GDzHdQOi6jjf8zaXhCYD`, Bia `Eyspt3SYhZzXd1Jd3J8O`, Katiuscia `wXwzHFLHnXex5h3JPBXA`). Registrar aqui a voz padrão quando a equipe aprovar uma.
 - Kairogen: conta suporte@zavi.ag, plano Essential (`veo3-1-lite` para vídeo).
 - Drive (brutos): pasta do projeto **PENDENTE: criar/apontar** (padrão: "qualquer pessoa com o link: leitor" para download direto).
