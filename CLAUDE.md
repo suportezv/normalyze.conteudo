@@ -18,8 +18,8 @@ Este repositório é o **Normalyze Conteúdo Studio**: edição e agendamento de
 ## IDs e contas
 
 - Metricool: conta da agência suporte@mentoravirtual.com.br, marca "normalyze.ai", **blog_id 6735045**, timezone America/Sao_Paulo. Redes conectadas: Instagram **@normalyze.ai**, Facebook, LinkedIn, TikTok e YouTube. Melhor horário: medir (getBestTimeToPostByNetwork).
-- ElevenLabs: chave em `.env` na raiz do video-use (transcrição Scribe + SFX/trilha + TTS; chave com voices_read). **A marca não tem voz própria**: escolher voz do catálogo da conta por peça (vozes profissionais pt-BR disponíveis: masculinas como Paulo `Qrdut83w0Cr152Yb4Xn3`, Juliano `wHnxjlY53t8X9Oi14Awz`, Hugo `NEiOFjKQRRitVnzQNwhS`; femininas como Raquel `GDzHdQOi6jjf8zaXhCYD`, Bia `Eyspt3SYhZzXd1Jd3J8O`, Katiuscia `wXwzHFLHnXex5h3JPBXA`). Registrar aqui a voz padrão quando a equipe aprovar uma.
-- Kairogen: conta suporte@zavi.ag, plano Essential (`veo3-1-lite` para vídeo).
+- ElevenLabs: chave em `.env` na raiz do video-use (transcrição Scribe + SFX/trilha + TTS; chave com voices_read). **A marca não tem voz própria**: escolher voz do catálogo da conta por peça (vozes profissionais pt-BR disponíveis: masculinas como Paulo `Qrdut83w0Cr152Yb4Xn3`, Juliano `wHnxjlY53t8X9Oi14Awz`, Hugo `NEiOFjKQRRitVnzQNwhS`; femininas como Raquel `GDzHdQOi6jjf8zaXhCYD`, Bia `Eyspt3SYhZzXd1Jd3J8O`, Katiuscia `wXwzHFLHnXex5h3JPBXA`). Registrar aqui a voz padrão quando a equipe aprovar uma. Amostras das 6 candidatas (mesmo texto de teste): `assets/vozes/`.
+- Kairogen: conta suporte@zavi.ag, plano Essential (`veo3-1-lite` para vídeo). O Kairogen acessa o mesmo workspace ElevenLabs da conta (mesmos voice_ids): TTS via `generate_audio` kind=speech (3 créditos/amostra) funciona mesmo sem a chave da ElevenLabs no ambiente. Para trazer o áudio ao container quando o proxy bloqueia `cdn.kairogen.ai`, usar `download_audio_from_url` (salva o binário localmente).
 - Drive (brutos): pasta do projeto **PENDENTE: criar/apontar** (padrão: "qualquer pessoa com o link: leitor" para download direto).
 
 ## Gotchas essenciais (herdados e validados nos projetos irmãos)
