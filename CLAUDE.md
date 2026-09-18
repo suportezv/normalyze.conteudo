@@ -27,7 +27,10 @@ Este repositório é o **Normalyze Conteúdo Studio**: edição e agendamento de
 
 ## Rede do environment (cloud)
 
-O allowlist e aplicado **quando o container nasce**. Mudar os dominios no environment so vale em **sessao nova**: a sessao ja aberta continua com a lista antiga.
+Mudanca no allowlist propaga em dois tempos, e isso ja custou um diagnostico errado:
+
+- **O agent proxy pega na hora.** Host liberado agora ja responde na sessao aberta, desde que a chamada passe pelo proxy (`source scripts/env.sh`).
+- **O firewall de egresso so pega em container novo.** Vale para o que contorna o proxy: os hosts que vem em `no_proxy` (npm, pypi) e o Chrome do render, que busca CDN direto. Se o render reclama de script externo e o `curl` pelo proxy responde 200, e isto: abra sessao nova.
 
 Lista minima para o estudio funcionar inteiro:
 
@@ -36,7 +39,7 @@ Lista minima para o estudio funcionar inteiro:
 | `github.com` | clone do video-use e do hyperframes; build estatico do ffmpeg (BtbN releases) |
 | `raw.githubusercontent.com` | `hyperframes skills update` e midia publica para o Metricool |
 | `registry.npmjs.org` | Remotion e o CLI `npx hyperframes` |
-| `cdn.jsdelivr.net` | **PENDENTE**: composicoes do hyperframes carregam o GSAP daqui. Sem ele o render morre com `sub_timeline_script_failure`. Workaround: `bash scripts/vendor-gsap.sh <projeto>` |
+| `cdn.jsdelivr.net` | composicoes do hyperframes carregam o GSAP daqui. Sem ele o render morre com `sub_timeline_script_failure`. Liberado e validado em 18/set/2026 |
 | `pypi.org` + `files.pythonhosted.org` | deps do video-use, pillow (overlays), numpy (batidas) |
 | `drive.google.com` + `drive.usercontent.google.com` | brutos |
 | `api.elevenlabs.io` | transcricao, TTS, SFX |
@@ -59,7 +62,7 @@ Notas que custaram tempo para descobrir:
 
 - **Remotion** ignora `REMOTION_BROWSER_EXECUTABLE` na CLI: o que vale e `Config.setBrowserExecutable()` no `remotion.config.ts` (o template ja faz) ou a flag `--browser-executable`. Sem isso ele tenta baixar Chrome de `remotion.media` e morre com 403.
 - **hyperframes** precisa de `HYPERFRAMES_BROWSER_PATH` apontando para o headless shell; sem ela o `browser ensure` fica preso em "Looking for an existing browser". O `scripts/env.sh` exporta.
-- **hyperframes** so renderiza com o GSAP acessivel. Enquanto `cdn.jsdelivr.net` nao estiver liberado, rode `bash scripts/vendor-gsap.sh projects/<nome>/<projeto-hf>` depois do `init`.
+- **hyperframes** so renderiza com o GSAP acessivel, e o Chrome do render busca `cdn.jsdelivr.net` direto, sem passar pelo agent proxy. Com o dominio liberado o `init` + `render` sai limpo (validado 18/set/2026). Se um ambiente futuro nao tiver o dominio, `bash scripts/vendor-gsap.sh projects/<nome>/<projeto-hf>` baixa o GSAP para dentro do projeto e resolve.
 - O `hyperframes skills update` depende de `raw.githubusercontent.com`. As 20 skills ja ficam registradas pelo fallback do `setup.sh`, entao a atualizacao e opcional.
 
 ## Texto e ideacao: OpenAI e Gemini
