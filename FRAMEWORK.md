@@ -68,3 +68,36 @@ Nota: a marca tem **LinkedIn e YouTube** conectados além de Instagram/TikTok, e
 ## Gotchas técnicos
 
 Ver "Gotchas essenciais" no `CLAUDE.md` deste repo. Histórico completo e scripts de referência: repos `suportezv/ana-conteudo` e `suportezv/eita-conteudo`.
+
+## Escolha do framework de motion: HyperFrames ou Remotion
+
+O estúdio mantém os dois, e a escolha **não é preferência do momento**: cada peça declara o seu no `BRIEFING.md`, na primeira linha. Sem isso, quem pegar o projeto depois não sabe onde mexer.
+
+**O que decide**: a ponte entre os dois só existe num sentido. Há a skill `remotion-to-hyperframes`; **não existe o inverso**. Então peça feita em HyperFrames é definitiva, e peça feita em Remotion ainda pode migrar. Na dúvida, Remotion é a aposta reversível.
+
+| Use **HyperFrames** quando | Use **Remotion** quando |
+|---|---|
+| É peça da série recorrente, na gramática já documentada | A peça é exceção, fora do padrão da série |
+| Você quer o fluxo pronto: brief, storyboard, registry de blocos, legendas, áudio, render em nuvem | A composição precisa de lógica de programação, dados ou parametrização |
+| O visual pedido já existe no registry | Você vai gerar **N variações** da mesma peça mudando nome, número ou idioma |
+| Ninguém vai reprocessar a peça em outro framework | Há chance real de a peça mudar de destino depois |
+
+**Padrão declarado: HyperFrames.** É o que está integrado ao fluxo do estúdio e o que tem as skills registradas. O Remotion entra por decisão consciente, não por inércia.
+
+**Custo de manter os dois, para vigiar**: dois `node_modules`, dois caminhos de render e dois lugares onde a paleta pode divergir. O terceiro está mitigado, porque os tokens do Remotion vivem em `remotion/src/marca.ts`, mas **se a paleta da marca mudar, atualizar os dois lados**.
+
+## Identidade visual (provisória, amostrada das artes)
+
+A paleta oficial segue **a definir com a equipe**. Enquanto isso, `remotion/src/marca.ts` carrega os hexes amostrados das artes já publicadas no LinkedIn, para que o Remotion renderize na cara da marca em vez de na paleta de outro estúdio:
+
+| Token | Hex | Onde aparece |
+|---|---|---|
+| `azul` | `#3330BD` | fundo dominante das artes; destaque sobre fundo claro |
+| `azulVivo` | `#4A57DD` | tom claro do gradiente do logo |
+| `indigo` | `#393BC6` | botão de CTA |
+| `verdeAgua` | `#2DC4B2` | acento, segundo tom do gradiente do logo |
+| `verdeVivo` | `#4CE8AF` | números e destaques sobre fundo escuro |
+| `auroraBase` | `#EDEDED` | fundo claro das artes |
+| `tinta` / `fundoEscuro` | `#17171D` | texto e fundo escuro |
+
+**Cor de acento para lettering de vídeo**: usar `#2DC4B2` (ou `#4CE8AF` sobre fundo escuro) no lugar do amarelo `#FFE234` dos projetos irmãos. **Fonte oficial ainda pendente**; o render cai para a sans do sistema até a equipe informar e o arquivo ser embutido como asset local.
