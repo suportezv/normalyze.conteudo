@@ -5,7 +5,7 @@ Estúdio de edição e agendamento de conteúdo para as redes da **Normalyze.ai*
 - **`FRAMEWORK.md`**: posicionamento (a preencher com a equipe), regras, formatos e fluxo por vídeo.
 - **`CLAUDE.md`**: memória persistente do projeto (IDs, contas, gotchas).
 - **`projects/`**: um subdiretório por peça (briefing, transcrição, scripts de edição, caption).
-- **`scripts/`**: setup e validação do ambiente (Linux/cloud).
+- **`scripts/`**: setup e validação do ambiente (Linux/cloud) e `gera_imagem.py` (imagens de post por preset de formato; `--listar` mostra presets e modelos).
 - **`patches/`**: correções necessárias nas ferramentas.
 
 ## Primeiro uso (cloud)
