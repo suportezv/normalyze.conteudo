@@ -8,19 +8,12 @@ VIDEO_USE="$TOOLS_DIR/browser-use/video-use"
 HYPERFRAMES="$TOOLS_DIR/heygen-com/hyperframes"
 
 # --- Rota de rede (cloud) ---------------------------------------------------
-# pypi.org, files.pythonhosted.org e registry.npmjs.org vem em no_proxy, entao
-# contornam o agent proxy e batem direto no firewall de egresso, que recusa com
-# 403 mesmo estando na allowlist. Roteando pelo agent proxy eles respondem 200.
-if [ -n "${HTTPS_PROXY:-}" ]; then
-  export no_proxy="" NO_PROXY="" HTTP_PROXY="$HTTPS_PROXY"
-  export SSL_CERT_FILE="${SSL_CERT_FILE:-/root/.ccr/ca-bundle.crt}"
-  export REQUESTS_CA_BUNDLE="$SSL_CERT_FILE"
-  export UV_DEFAULT_INDEX="https://pypi.org/simple"
-  export npm_config_proxy="$HTTPS_PROXY" npm_config_https_proxy="$HTTPS_PROXY"
-  export npm_config_noproxy="" npm_config_cafile="$SSL_CERT_FILE"
-fi
+# O bloco vive em scripts/env.sh porque toda chamada manual de npm/npx/pip
+# precisa dele tambem, nao so este setup. Ver os comentarios de la.
+# shellcheck source=/dev/null
+source "$REPO_ROOT/scripts/env.sh"
 
-echo "== 1/5 ffmpeg =="
+echo "== 1/6 ffmpeg =="
 # No cloud com network Custom o apt fica bloqueado (403 no archive.ubuntu.com), então
 # o caminho confiável é o build estático do BtbN via GitHub Releases, que o proxy libera.
 # O build "gpl" traz libass (subtitles) e zimg (zscale), ambos obrigatórios aqui.
@@ -64,7 +57,7 @@ if ! command -v ffmpeg >/dev/null; then
 fi
 ffmpeg -version 2>/dev/null | head -1 || true
 
-echo "== 2/5 video-use =="
+echo "== 2/6 video-use =="
 if [ ! -d "$VIDEO_USE/.git" ]; then
   GIT_LFS_SKIP_SMUDGE=1 git clone --depth 1 https://github.com/browser-use/video-use "$VIDEO_USE" || { echo "AVISO: clone do video-use falhou"; }
 fi
@@ -84,7 +77,7 @@ fi
 mkdir -p ~/.claude/skills
 ln -sfn "$VIDEO_USE" ~/.claude/skills/video-use
 
-echo "== 3/5 hyperframes + media-use =="
+echo "== 3/6 hyperframes + media-use =="
 if [ ! -d "$HYPERFRAMES/.git" ]; then
   GIT_LFS_SKIP_SMUDGE=1 git clone --depth 1 https://github.com/heygen-com/hyperframes "$HYPERFRAMES" || { echo "AVISO: clone do hyperframes falhou"; }
 fi
@@ -105,11 +98,25 @@ if ! npx --yes hyperframes skills update 2>/dev/null; then
   echo "$n skills do hyperframes registradas a partir de $HYPERFRAMES/skills"
 fi
 
-echo "== 4/5 Python (PIL para overlays, numpy para batidas) =="
+echo "== 4/6 Python (PIL para overlays, numpy para batidas) =="
 python3 -c 'import PIL' 2>/dev/null || pip3 install pillow || echo "AVISO: pillow não instalado (pypi bloqueado). Lettering/overlays indisponíveis."
 python3 -c 'import numpy' 2>/dev/null || pip3 install numpy || echo "AVISO: numpy não instalado (pypi bloqueado). Detecção de batidas indisponível."
 
-echo "== 5/5 estúdio =="
+echo "== 5/6 Remotion =="
+# Remotion e por projeto (templates/remotion + scripts/new-remotion.sh), entao
+# aqui so confirmamos que o registry responde e que ha Chrome para o render.
+if npm view remotion version >/dev/null 2>&1; then
+  echo "registry.npmjs.org OK (remotion $(npm view remotion version 2>/dev/null))"
+else
+  echo "AVISO: registry.npmjs.org inacessivel; Remotion e o CLI do hyperframes nao instalam."
+fi
+if [ -n "${CHROME_SHELL:-}" ]; then
+  echo "Chrome para render: $CHROME_SHELL"
+else
+  echo "AVISO: headless shell nao encontrado em /opt/pw-browsers; render local indisponivel."
+fi
+
+echo "== 6/6 estúdio =="
 ln -sfn "$REPO_ROOT" ~/normalyze-conteudo
 echo "~/normalyze-conteudo -> $REPO_ROOT"
 

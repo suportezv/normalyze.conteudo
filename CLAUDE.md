@@ -14,6 +14,7 @@ Este repositório é o **Normalyze Conteúdo Studio**: edição e agendamento de
 - Estúdio: este repo (symlink `~/normalyze-conteudo` aponta para cá). Projetos em `projects/<nome>/`.
 - Ferramentas: `video-use` e `hyperframes` clonados em `/workspace/browser-use/` e `/workspace/heygen-com/` (Linux/cloud) ou `~/video-editor/` (Mac). Skills registradas em `~/.claude/skills/`.
 - Ambiente novo (container limpo): rode `bash scripts/setup.sh` e depois `bash scripts/validate.sh`.
+- **Antes de qualquer `npm`, `npx`, `pip` ou `uv` na mao: `source scripts/env.sh`.** Sem isso o npm contorna o agent proxy e leva 403 do firewall mesmo com o dominio liberado. O env.sh tambem aponta Remotion e hyperframes para o Chrome que ja vem no container.
 
 ## IDs e contas
 
@@ -35,6 +36,7 @@ Lista minima para o estudio funcionar inteiro:
 | `github.com` | clone do video-use e do hyperframes; build estatico do ffmpeg (BtbN releases) |
 | `raw.githubusercontent.com` | `hyperframes skills update` e midia publica para o Metricool |
 | `registry.npmjs.org` | Remotion e o CLI `npx hyperframes` |
+| `cdn.jsdelivr.net` | **PENDENTE**: composicoes do hyperframes carregam o GSAP daqui. Sem ele o render morre com `sub_timeline_script_failure`. Workaround: `bash scripts/vendor-gsap.sh <projeto>` |
 | `pypi.org` + `files.pythonhosted.org` | deps do video-use, pillow (overlays), numpy (batidas) |
 | `drive.google.com` + `drive.usercontent.google.com` | brutos |
 | `api.elevenlabs.io` | transcricao, TTS, SFX |
@@ -43,12 +45,43 @@ Lista minima para o estudio funcionar inteiro:
 
 Atencao ao editar a lista: tirar `github.com`, `drive.google.com` ou `api.elevenlabs.io` quebra, respectivamente, ffmpeg + clones, brutos e audio.
 
+## Producao de video: qual ferramenta
+
+Tres caminhos, validados ponta a ponta em 18/set/2026 neste container:
+
+| Ferramenta | Para que | Como |
+|---|---|---|
+| **video-use** | editar footage real (brutos, cortes, legendas, grade) | skill `/video-use` |
+| **hyperframes** | motion graphics, explainer, promo, deck (HTML + GSAP) | skill `/hyperframes` e a CLI `npx hyperframes` |
+| **Remotion** | peca em React quando o time ja tem componente pronto | `bash scripts/new-remotion.sh <nome>` |
+
+Notas que custaram tempo para descobrir:
+
+- **Remotion** ignora `REMOTION_BROWSER_EXECUTABLE` na CLI: o que vale e `Config.setBrowserExecutable()` no `remotion.config.ts` (o template ja faz) ou a flag `--browser-executable`. Sem isso ele tenta baixar Chrome de `remotion.media` e morre com 403.
+- **hyperframes** precisa de `HYPERFRAMES_BROWSER_PATH` apontando para o headless shell; sem ela o `browser ensure` fica preso em "Looking for an existing browser". O `scripts/env.sh` exporta.
+- **hyperframes** so renderiza com o GSAP acessivel. Enquanto `cdn.jsdelivr.net` nao estiver liberado, rode `bash scripts/vendor-gsap.sh projects/<nome>/<projeto-hf>` depois do `init`.
+- O `hyperframes skills update` depende de `raw.githubusercontent.com`. As 20 skills ja ficam registradas pelo fallback do `setup.sh`, entao a atualizacao e opcional.
+
+## Texto e ideacao: OpenAI e Gemini
+
+`scripts/llm.py` fala com os dois usando so stdlib. As chaves vem das env vars do environment (`OPENAI_API_KEY`, `GEMINI_API_KEY`), nunca do repo.
+
+```bash
+source scripts/env.sh
+python3 scripts/llm.py --check                       # testa as duas conexoes
+python3 scripts/llm.py --list                        # modelos vivos
+python3 scripts/llm.py --system "<tom de voz>" "<prompt>"
+python3 scripts/llm.py --provider gemini "<prompt>"
+```
+
+Defaults em `DEFAULTS` no topo do script: `gpt-5.5` e `gemini-flash-latest`. Passar o tom de voz da marca em `--system` quando o FRAMEWORK.md estiver preenchido.
+
 ## Gotchas essenciais (herdados e validados nos projetos irmãos)
 
 - Brutos de iPhone são HLG 10-bit: gerar proxy SDR uma vez antes de editar (filtro `colorspace=all=bt709:itrc=bt2020-10:iprimaries=bt2020:ispace=bt2020nc`).
 - Legendas SEMPRE por último no filter chain; overlays via PIL em PNG com fade de alpha (ou PNG sequence + qtrle).
 - Zoom animado com `zoompan`, não `crop` (crop não aceita `t` em w/h).
-- video-use precisa do patch `patches/video-use-is-portrait-source.patch` (senão vertical vira paisagem).
+- video-use e vertical: o patch `patches/video-use-is-portrait-source.patch` foi aposentado em 18/set/2026, o upstream passou a ler o `rotation` do side data. O `validate.sh` confere o comportamento, nao a presenca do patch. Se a deteccao sumir do upstream, vertical volta a virar paisagem.
 - Metricool MCP: sem delete (cancelar = update draft:true; update devolve id novo); mídia por URL pública (o Metricool copia para o CDN dele na hora).
 - Mac: usar ffmpeg-full keg-only com PATH explícito. Linux: ffmpeg do apt já serve.
 - Cloud, brutos do Drive: usar environment com network Custom e `drive.google.com` + `drive.usercontent.google.com` + `api.elevenlabs.io` liberados (o environment "ana-conteudo" já está assim). Download direto de arquivo público, qualquer tamanho: `curl -L "https://drive.usercontent.google.com/download?id=<ID>&export=download&confirm=t"`. Conector MCP do Drive: busca e metadados; download só até ~4 MB. Fallback pequeno: Kairogen `download_audio_from_url`.

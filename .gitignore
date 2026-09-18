@@ -9,3 +9,11 @@ projects/**/*.wav
 projects/**/*.m4a
 projects/**/*.MOV
 projects/**/*.png
+
+# Node (projetos Remotion e hyperframes)
+node_modules/
+package-lock.json
+
+# Saidas de render
+projects/**/out/
+projects/**/renders/

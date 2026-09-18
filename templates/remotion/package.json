@@ -1,0 +1,17 @@
+{
+  "name": "normalyze-remotion",
+  "private": true,
+  "version": "1.0.0",
+  "scripts": {
+    "studio": "remotion studio src/index.ts",
+    "render": "remotion render src/index.ts Main out/video.mp4",
+    "still": "remotion still src/index.ts Main out/frame.png"
+  },
+  "dependencies": {
+    "@remotion/cli": "4.0.526",
+    "@remotion/renderer": "4.0.526",
+    "react": "19.2.0",
+    "react-dom": "19.2.0",
+    "remotion": "4.0.526"
+  }
+}
