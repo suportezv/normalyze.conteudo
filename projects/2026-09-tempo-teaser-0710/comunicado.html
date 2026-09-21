@@ -1,0 +1,104 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<title>Tempo by Porsche · teaser 07.10</title>
+<style>
+  /* Fontes locais (via npm @fontsource): o Google Fonts esta fora do allowlist. */
+  @font-face { font-family: "Sora"; font-weight: 600; src: url("assets/sora-latin-600-normal.woff2") format("woff2"); }
+  @font-face { font-family: "Sora"; font-weight: 700; src: url("assets/sora-latin-700-normal.woff2") format("woff2"); }
+  @font-face { font-family: "Sora"; font-weight: 800; src: url("assets/sora-latin-800-normal.woff2") format("woff2"); }
+  @font-face { font-family: "Inter"; font-weight: 400; src: url("assets/inter-latin-400-normal.woff2") format("woff2"); }
+  @font-face { font-family: "Inter"; font-weight: 500; src: url("assets/inter-latin-500-normal.woff2") format("woff2"); }
+  @font-face { font-family: "Inter"; font-weight: 600; src: url("assets/inter-latin-600-normal.woff2") format("woff2"); }
+
+  :root {
+    --bg: #0b0f1a;
+    --ink: #eef2f8;
+    --muted: #a3afc4;
+    --amarelo: #ffd23f;
+    --teal: #2ee6b0;
+    --cyan: #22c7f0;
+    --azul: #2d6bff;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html, body { width: 1080px; height: 1350px; background: var(--bg); overflow: hidden; }
+  body { font-family: "Inter", sans-serif; color: var(--ink); position: relative; -webkit-font-smoothing: antialiased; }
+
+  /* Atmosfera: dois brilhos da identidade Normalyze e um toque amarelo discreto. */
+  .glow { position: absolute; border-radius: 50%; filter: blur(110px); pointer-events: none; }
+  .glow.a { width: 760px; height: 760px; left: -260px; top: 520px; background: radial-gradient(circle, rgba(46,230,176,.32), rgba(45,107,255,.18) 55%, transparent 72%); }
+  .glow.b { width: 620px; height: 620px; right: -220px; top: -160px; background: radial-gradient(circle, rgba(45,107,255,.30), rgba(34,199,240,.12) 55%, transparent 72%); }
+  .glow.c { width: 420px; height: 420px; right: 60px; top: 690px; background: radial-gradient(circle, rgba(255,210,63,.16), transparent 68%); }
+
+  /* Grade sutil, so pra dar corpo ao fundo escuro. */
+  .grid { position: absolute; inset: 0; background-image:
+      linear-gradient(rgba(255,255,255,.028) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255,255,255,.028) 1px, transparent 1px);
+    background-size: 60px 60px; mask-image: radial-gradient(ellipse at 50% 45%, #000 30%, transparent 78%); }
+
+  .page { position: relative; height: 100%; padding: 84px 88px 72px; display: flex; flex-direction: column; }
+
+  .kicker { display: flex; align-items: center; gap: 16px; color: var(--amarelo); font-family: "Sora"; font-weight: 700; font-size: 20px; letter-spacing: .22em; text-transform: uppercase; }
+  .kicker svg { width: 30px; height: 40px; }
+
+  h1 { margin-top: 56px; font-family: "Sora"; font-weight: 800; font-size: 66px; line-height: 1.12; letter-spacing: -.02em; max-width: 900px; }
+  h1 .g { background: linear-gradient(90deg, var(--teal), var(--cyan) 45%, var(--azul)); -webkit-background-clip: text; background-clip: text; color: transparent; }
+
+  .lead { margin-top: 36px; font-size: 27px; line-height: 1.5; color: var(--muted); max-width: 820px; }
+  .lead b { color: var(--ink); font-weight: 600; }
+
+  .date { margin-top: auto; display: flex; flex-direction: column; align-items: flex-start; }
+  .date .label { font-family: "Sora"; font-weight: 700; font-size: 22px; letter-spacing: .3em; text-transform: uppercase; color: var(--amarelo); }
+  .date .big { font-family: "Sora"; font-weight: 800; font-size: 236px; line-height: .95; letter-spacing: -.045em; margin-top: 6px; color: #fff;
+    text-shadow: 0 0 60px rgba(34,199,240,.35), 0 0 140px rgba(45,107,255,.25); }
+  .date .big span { color: var(--amarelo); }
+  .date .dia { margin-top: 10px; font-size: 26px; color: var(--muted); font-weight: 500; letter-spacing: .02em; }
+
+  .rule { margin-top: 54px; height: 1px; background: linear-gradient(90deg, rgba(255,255,255,.18), rgba(255,255,255,.04)); }
+
+  .logos { margin-top: 32px; display: flex; align-items: center; gap: 36px; }
+  .logos .sep { width: 1px; height: 54px; background: rgba(255,255,255,.22); }
+  .logos img { height: 78px; display: block; }
+  /* PLACEHOLDER: trocar por <img src="assets/tempo-logo.svg"> quando o arquivo chegar. */
+  .tempo { font-family: "Sora"; font-weight: 700; font-size: 28px; letter-spacing: .2em; text-transform: uppercase; line-height: 1; }
+  .tempo small { display: block; margin-top: 8px; font-family: "Inter"; font-weight: 500; font-size: 13px; letter-spacing: .3em; color: var(--muted); }
+</style>
+</head>
+<body>
+  <div class="glow a"></div>
+  <div class="glow b"></div>
+  <div class="glow c"></div>
+  <div class="grid"></div>
+
+  <main class="page">
+    <div class="kicker">
+      <!-- Laco de conscientizacao, desenhado aqui pra nao depender de icone externo. -->
+      <svg viewBox="0 0 30 40" fill="none" aria-hidden="true">
+        <path d="M9.5 6 Q15 -1 20.5 6" stroke="#ffd23f" stroke-width="4.6" stroke-linecap="round"/>
+        <path d="M9.5 6 C3 13, 7.5 21, 16.5 27 S25.5 35, 25.5 38" stroke="#ffd23f" stroke-width="4.6" stroke-linecap="round"/>
+        <path d="M20.5 6 C27 13, 22.5 21, 13.5 27 S4.5 35, 4.5 38" stroke="#ffd23f" stroke-width="4.6" stroke-linecap="round"/>
+      </svg>
+      Setembro Amarelo
+    </div>
+
+    <h1>Setembro é o mês de falar sobre saúde mental.<br><span class="g">Em outubro, a conversa vira ação.</span></h1>
+
+    <p class="lead">Estamos preparando um <b>novo programa de saúde mental e bem-estar</b> para todo o nosso time. Os detalhes ficam guardados até lá. Mas uma coisa a gente já pode pedir:</p>
+
+    <div class="date">
+      <div class="label">Save the date</div>
+      <div class="big">07<span>.</span>10</div>
+      <div class="dia">quarta-feira</div>
+    </div>
+
+    <div class="rule"></div>
+
+    <div class="logos">
+      <div class="tempo">Tempo<small>by Porsche</small></div>
+      <div class="sep"></div>
+      <img src="assets/normalyze-logo.png" alt="Normalyze">
+    </div>
+  </main>
+</body>
+</html>
