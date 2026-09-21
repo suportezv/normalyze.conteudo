@@ -3,9 +3,9 @@
 **Peça:** comunicado interno, 1080x1350, gancho de Setembro Amarelo, tom de teaser (save the date).
 **Fonte da verdade:** `comunicado.html`. Renderizar com `bash render.sh`.
 
-## Pendências
-- **Logo da Tempo by Porsche é placeholder tipográfico.** O site está fora do allowlist do environment. Quando o arquivo chegar (SVG ou PNG com fundo transparente), salvar em `assets/tempo-logo.svg` e trocar o `<div class="tempo">` por `<img src="assets/tempo-logo.svg">`.
-- Logo da Normalyze foi extraído do slide 01 do carrossel "Diagnósticos envelhecem" (sem arquivo oficial no repo). Se o time mandar o vetor, substituir `assets/normalyze-logo.png`.
+## Logos
+- **Tempo by Porsche:** original enviado pelo cliente em `assets/tempo-logo-original.png` (preto sobre branco). A peça usa `assets/tempo-logo.png`, knockout branco gerado do original (badge branco, letras vazadas mostrando o navy). Se o fundo mudar para claro, usar o original.
+- **Normalyze:** extraído do slide 01 do carrossel "Diagnósticos envelhecem" (sem vetor oficial no repo). Se o time mandar o vetor, substituir `assets/normalyze-logo.png`.
 
 ## Decisões
 - Fontes Sora (títulos) e Inter (texto) via `@fontsource`, porque Google Fonts está bloqueado. Arquivos em `assets/`.
