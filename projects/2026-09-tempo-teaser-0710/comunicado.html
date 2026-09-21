@@ -60,7 +60,9 @@
   .logos { margin-top: 32px; display: flex; align-items: center; gap: 36px; }
   .logos .sep { width: 1px; height: 54px; background: rgba(255,255,255,.22); }
   .logos img { height: 78px; display: block; }
-  /* PLACEHOLDER: trocar por <img src="assets/tempo-logo.svg"> quando o arquivo chegar. */
+  /* Logo do cliente: quando chegar, knockout branco em assets/tempo-logo.png (badge preto vira branco, letras vazadas). */
+  .logos img.tempo-logo { height: 84px; }
+  /* PLACEHOLDER tipografico ate o arquivo chegar. */
   .tempo { font-family: "Sora"; font-weight: 700; font-size: 28px; letter-spacing: .2em; text-transform: uppercase; line-height: 1; }
   .tempo small { display: block; margin-top: 8px; font-family: "Inter"; font-weight: 500; font-size: 13px; letter-spacing: .3em; color: var(--muted); }
 </style>
@@ -95,6 +97,7 @@
     <div class="rule"></div>
 
     <div class="logos">
+      <!-- TROCAR pelo logo real quando o arquivo chegar (gerar knockout branco em assets/tempo-logo.png e usar <img class="tempo-logo" src="assets/tempo-logo.png">) -->
       <div class="tempo">Tempo<small>by Porsche</small></div>
       <div class="sep"></div>
       <img src="assets/normalyze-logo.png" alt="Normalyze">
